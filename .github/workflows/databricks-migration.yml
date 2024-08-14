@@ -1,0 +1,38 @@
+name: Databricks Migration Pipeline
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  migration:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Set up Databricks profiles
+      run: |
+        echo "[KELLANOVA_WORKSPACE_SOURCE_NEW]" >> ~/.databrickscfg
+        echo "host = https://dbtigeranalytics-ds-dev-dep2.cloud.databricks.com" >> ~/.databrickscfg
+        echo "token = ${{ secrets.DATABRICKS_TOKEN_SOURCE }}" >> ~/.databrickscfg
+        echo "[KELLANOVA_WORKSPACE_DESTINATION_NEW]" >> ~/.databrickscfg
+        echo "host = https://dbtigeranalytics-ds-dev-dep.cloud.databricks.com" >> ~/.databrickscfg
+        echo "token = ${{ secrets.DATABRICKS_TOKEN_DESTINATION }}" >> ~/.databrickscfg
+        cat ~/.databrickscfg
+
+    - name: Install dependencies
+      run: |
+        python3 setup.py install
+
+    - name: Run Databricks Migration Pipeline
+      run: |
+        SRC_PROFILE=KELLANOVA_WORKSPACE_SOURCE_NEW
+        python3 migration_pipeline.py --profile $SRC_PROFILE --export-pipeline --use-checkpoint --set-export-dir ../backups/
