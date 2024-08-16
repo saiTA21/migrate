@@ -39,4 +39,5 @@ jobs:
     - name: Run Databricks Migration Pipeline
       run: |
         SRC_PROFILE=KELLANOVA_WORKSPACE_SOURCE_NEW
-        python3 migration_pipeline.py --profile $SRC_PROFILE --export-pipeline --use-checkpoint --set-export-dir ../backups/
+        python3 migration_pipeline.py --profile $SRC_PROFILE --export-pipeline --use-checkpoint --session sample --set-export-dir ../backups/
+        python3 migration_pipeline.py --profile $DST_PROFILE --import-pipeline --use-checkpoint --session sample
