@@ -40,3 +40,16 @@ jobs:
       run: |
         SRC_PROFILE=KELLANOVA_WORKSPACE_SOURCE_NEW
         python3 migration_pipeline.py --profile $SRC_PROFILE --export-pipeline --use-checkpoint --session sample --set-export-dir ../backups/
+
+    - name: Zip the backups folder
+      run: |
+        TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+        zip -r backups_$TIMESTAMP.zip ../backups
+
+    - name: Upload to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+      run: |
+        aws s3 cp backups_$TIMESTAMP.zip s3://existing-source-bucket-1/
