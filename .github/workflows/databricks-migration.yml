@@ -44,8 +44,7 @@ jobs:
 
     - name: Zip the backups folder
       run: |
-        TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
-        zip -r backups_$TIMESTAMP.zip ../backups
+        zip -r backups_123.zip ../backups
 
     - name: Upload to S3
       env:
@@ -53,6 +52,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
-        aws s3 cp backups_$TIMESTAMP.zip s3://existing-source-bucket-1/
+        aws s3 cp backups_123.zip s3://existing-source-bucket-1/
 
 
