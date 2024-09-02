@@ -24,7 +24,7 @@ jobs:
         echo "host = https://dbc-f074b72b-99f1.cloud.databricks.com" >> ~/.databrickscfg
         echo "token = ${{ secrets.DATABRICKS_TOKEN_SOURCE }}" >> ~/.databrickscfg
         echo "[KELLANOVA_WORKSPACE_DESTINATION_NEW]" >> ~/.databrickscfg
-        echo "host = https://dbtigeranalytics-ds-dev-dep.cloud.databricks.com" >> ~/.databrickscfg
+        echo "host = https://dbc-280cb907-6a02.cloud.databricks.com" >> ~/.databrickscfg
         echo "token = ${{ secrets.DATABRICKS_TOKEN_DESTINATION }}" >> ~/.databrickscfg
         cat ~/.databrickscfg
 
