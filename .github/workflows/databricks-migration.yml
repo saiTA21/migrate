@@ -67,6 +67,10 @@ jobs:
         aws s3 cp backups_123.zip s3://existing-source-bucket-1/
 
 
+    - name: Unzip backups folder
+      run: |
+        unzip backups_123.zip -d ../
+
     - name: Run Databricks Migration Import Pipeline
       run: |
         DEST_PROFILE=KELLANOVA_WORKSPACE_DESTINATION_NEW
