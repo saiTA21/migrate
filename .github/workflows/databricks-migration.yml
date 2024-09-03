@@ -46,6 +46,18 @@ jobs:
       run: |
         zip -r backups_123.zip ../backups
 
+    - name: Validate zip file
+      id: validate_zip
+      run: |
+        if unzip -t backups_123.zip; then
+          echo "Valid zip file"
+          echo "zip_valid=true" >> $GITHUB_ENV
+        else
+          echo "Invalid zip file, skipping upload."
+          echo "zip_valid=false" >> $GITHUB_ENV
+        fi
+        
+
     - name: Upload to S3
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
