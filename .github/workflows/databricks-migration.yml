@@ -79,4 +79,5 @@ jobs:
     - name: Run Databricks Migration Import Pipeline
       run: |
         DEST_PROFILE=KELLANOVA_WORKSPACE_DESTINATION_NEW
-        python3 migration_pipeline.py --profile $DEST_PROFILE --import-pipeline --use-checkpoint --session sample
+        echo "y" | python3 migration_pipeline.py --profile $DEST_PROFILE --import-pipeline --use-checkpoint --session sample
+
