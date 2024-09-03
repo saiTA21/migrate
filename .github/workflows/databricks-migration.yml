@@ -69,7 +69,8 @@ jobs:
 
     - name: Unzip backups folder
       run: |
-        unzip backups_123.zip -d ../
+        unzip -j backups_123.zip -d ../backups/
+
 
     - name: Run Databricks Migration Import Pipeline
       run: |
